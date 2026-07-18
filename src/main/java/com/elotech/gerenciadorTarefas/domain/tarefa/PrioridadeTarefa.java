@@ -1,4 +1,4 @@
-package com.elotech.gerenciador_tarefas.domain.tarefa;
+package com.elotech.gerenciadorTarefas.domain.tarefa;
 
 public enum PrioridadeTarefa {
 

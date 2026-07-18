@@ -1,7 +1,7 @@
-package com.elotech.gerenciador_tarefas.domain.tarefa;
+package com.elotech.gerenciadorTarefas.domain.tarefa;
 
-import com.elotech.gerenciador_tarefas.domain.exception.RegraNegocioException;
-import com.elotech.gerenciador_tarefas.domain.usuario.Usuario;
+import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
+import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +32,26 @@ public class Tarefa {
     private Usuario responsavel;
 
     /**
+     * Contrutor
+     *
+     * @param pTitulo
+     * @param pDescricao
+     * @param pPrioridade
+     */
+    public Tarefa(final String pTitulo, final String pDescricao, final PrioridadeTarefa pPrioridade) {
+
+        this.titulo = pTitulo;
+        this.descricao = pDescricao;
+        this.prioridade = pPrioridade;
+        this.status = StatusTarefa.TODO;
+        this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
+
+    }
+
+    /**
      * Metodo que controla a transicao de status de uma tarefa
+     *
      * @param pNovoStatus
      */
     public void alterarStatus(final StatusTarefa pNovoStatus) {
@@ -59,6 +78,7 @@ public class Tarefa {
 
     /**
      * Metodo que valida tarefas criticas
+     *
      * @return
      */
     public boolean isCritical() {
@@ -68,11 +88,12 @@ public class Tarefa {
     /**
      * Metodo responsavel por validar a transicao de status.
      * Nãao e permitido uma tarefa DONE voltar para TODO
+     *
      * @param pNovoStatus
      */
     private void validarTransicaoStatus(final StatusTarefa pNovoStatus) {
 
-        if(this.status == StatusTarefa.DONE && pNovoStatus == StatusTarefa.TODO){
+        if (this.status == StatusTarefa.DONE && pNovoStatus == StatusTarefa.TODO) {
             throw new RegraNegocioException("Uma tarefa DONE não pode voltar para TODO");
         }
     }

@@ -1,21 +1,29 @@
-package com.elotech.gerenciador_tarefas.domain.projeto;
+package com.elotech.gerenciadorTarefas.domain.projeto;
 
-import com.elotech.gerenciador_tarefas.domain.exception.RegraNegocioException;
-import com.elotech.gerenciador_tarefas.domain.tarefa.StatusTarefa;
-import com.elotech.gerenciador_tarefas.domain.tarefa.Tarefa;
-import com.elotech.gerenciador_tarefas.domain.usuario.Usuario;
+import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
+import com.elotech.gerenciadorTarefas.domain.tarefa.StatusTarefa;
+import com.elotech.gerenciadorTarefas.domain.tarefa.Tarefa;
+import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 public class Projeto {
 
-    private List<MembroProjeto> membros;
-
+    private List<MembrosProjeto> membros;
     private List<Tarefa> tarefas;
+
+    /**
+     * Contrutor
+     */
+    public Projeto() {
+        this.membros = new ArrayList<>();
+        this.tarefas = new ArrayList<>();
+    }
 
     /**
      * Metodo responsavel por controlar a finalizacao de uma tarefa
@@ -25,7 +33,7 @@ public class Projeto {
      */
     public void finalizarTarefa(final Tarefa pTarefa, final Usuario pUsuario) {
 
-        final MembroProjeto membro = buscarMembro(pUsuario);
+        final MembrosProjeto membro = buscarMembro(pUsuario);
 
         if (pTarefa.isCritical() && !membro.isAdmin()) {
             throw new RegraNegocioException("Somente ADMIN pode finalizar tarefas CRITICAL");
@@ -48,7 +56,7 @@ public class Projeto {
      * @param pUsuario
      * @return
      */
-    private MembroProjeto buscarMembro(final Usuario pUsuario) {
+    private MembrosProjeto buscarMembro(final Usuario pUsuario) {
 
         return membros.stream()
             .filter(m -> m.getUsuario().equals(pUsuario))

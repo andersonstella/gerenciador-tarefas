@@ -1,4 +1,4 @@
-package com.elotech.gerenciador_tarefas;
+package com.elotech.gerenciadorTarefas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.elotech.gerenciador_tarefas.security;
+package com.elotech.gerenciadorTarefas.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
