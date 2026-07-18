@@ -1,16 +1,22 @@
-package com.elotech.gerenciador_tarefas.domain.projeto;
+package com.elotech.gerenciadorTarefas.domain.projeto;
 
-import com.elotech.gerenciador_tarefas.domain.usuario.Usuario;
+import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MembroProjeto {
+public class MembrosProjeto {
 
     private Usuario usuario;
-
     private PapelMembro papel;
+
+    /**
+     * Contrutor
+     */
+    public MembrosProjeto() {
+        //NA
+    }
 
     /**
      * Boolena para saber se e admin

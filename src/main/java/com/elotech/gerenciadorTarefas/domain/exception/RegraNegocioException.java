@@ -1,4 +1,4 @@
-package com.elotech.gerenciador_tarefas.domain.exception;
+package com.elotech.gerenciadorTarefas.domain.exception;
 
 public class RegraNegocioException extends RuntimeException {
 

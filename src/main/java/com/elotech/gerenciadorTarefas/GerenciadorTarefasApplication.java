@@ -1,4 +1,4 @@
-package com.elotech.gerenciador_tarefas;
+package com.elotech.gerenciadorTarefas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
