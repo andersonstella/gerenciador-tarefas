@@ -16,14 +16,10 @@ public final class TarefaMapper {
 
         TarefaEntity entity = new TarefaEntity(tarefa.getId(), tarefa.getTitulo(), tarefa.getDescricao(), tarefa.getStatus(),
             tarefa.getPrioridade(), tarefa.getCriadoEm(), tarefa.getAtualizadoEm(), tarefa.getPrazo());
-        entity.setId(tarefa.getId());
-        entity.setTitulo(tarefa.getTitulo());
-        entity.setDescricao(tarefa.getDescricao());
-        entity.setStatus(tarefa.getStatus());
-        entity.setPrioridade(tarefa.getPrioridade());
-        entity.setCriadoEm(tarefa.getCriadoEm());
-        entity.setAtualizadoEm(tarefa.getAtualizadoEm());
-        entity.setPrazo(tarefa.getPrazo());
+
+        if (tarefa.getResponsavel() != null) {
+            entity.setResponsavel(UsuarioMapper.toEntity(tarefa.getResponsavel()));
+        }
 
         return entity;
     }
@@ -35,10 +31,15 @@ public final class TarefaMapper {
         }
 
         Tarefa tarefa = new Tarefa(entity.getId(), entity.getTitulo(), entity.getDescricao(), entity.getPrioridade());
+
         tarefa.setStatus(entity.getStatus());
         tarefa.setCriadoEm(entity.getCriadoEm());
         tarefa.setAtualizadoEm(entity.getAtualizadoEm());
         tarefa.setPrazo(entity.getPrazo());
+
+        if (entity.getResponsavel() != null) {
+            tarefa.setResponsavel(UsuarioMapper.toDomain(entity.getResponsavel()));
+        }
 
         return tarefa;
     }
