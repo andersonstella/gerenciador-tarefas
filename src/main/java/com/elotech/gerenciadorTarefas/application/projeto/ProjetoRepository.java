@@ -10,5 +10,5 @@ public interface ProjetoRepository {
 
     Projeto buscarPorId(UUID id);
 
-    void deletar(UUID id);
+    void remover(UUID id);
 }

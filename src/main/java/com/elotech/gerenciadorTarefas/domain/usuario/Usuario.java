@@ -16,7 +16,7 @@ public class Usuario {
     private String email;
 
     /**
-     * Contrutor
+     * Contrutor para criação
      *
      * @param pNome
      * @param pEmail
@@ -29,6 +29,18 @@ public class Usuario {
         this.id = UUID.randomUUID();
         this.nome = pNome;
         this.email = pEmail;
+    }
+
+    /**
+     * Construtor para reconstrução
+     * @param id
+     * @param nome
+     * @param email
+     */
+    public Usuario(final UUID id, final String nome, final String email) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
     }
 
     /**

@@ -32,18 +32,37 @@ public class Tarefa {
     private Usuario responsavel;
 
     /**
-     * Contrutor
+     * Contrutor para criação
      *
-     * @param pTitulo
-     * @param pDescricao
-     * @param pPrioridade
+     * @param titulo
+     * @param descricao
+     * @param prioridade
      */
-    public Tarefa(final String pTitulo, final String pDescricao, final PrioridadeTarefa pPrioridade) {
+    public Tarefa(final String titulo, final String descricao, final PrioridadeTarefa prioridade) {
 
         this.id = UUID.randomUUID();
-        this.titulo = pTitulo;
-        this.descricao = pDescricao;
-        this.prioridade = pPrioridade;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.prioridade = prioridade;
+        this.status = StatusTarefa.TODO;
+        this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
+
+    }
+
+    /**
+     * Construtor para reconstrção
+     * @param id
+     * @param titulo
+     * @param descricao
+     * @param prioridade
+     */
+    public Tarefa(final UUID id, final String titulo, final String descricao, final PrioridadeTarefa prioridade) {
+
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.prioridade = prioridade;
         this.status = StatusTarefa.TODO;
         this.criadoEm = LocalDateTime.now();
         this.atualizadoEm = LocalDateTime.now();
