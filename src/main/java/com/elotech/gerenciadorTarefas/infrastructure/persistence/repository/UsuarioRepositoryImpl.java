@@ -7,9 +7,11 @@ import com.elotech.gerenciadorTarefas.infrastructure.exception.RegistroNaoEncont
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.entity.UsuarioEntity;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.jpa.UsuarioJpaRepository;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.mapper.UsuarioMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     private final UsuarioJpaRepository usuarioJpaRepository;
@@ -30,7 +32,8 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     @Override
     public Usuario buscarPorId(final UUID id) {
 
-        final UsuarioEntity entity = usuarioJpaRepository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado"));
+        final UsuarioEntity entity = usuarioJpaRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado"));
 
         return UsuarioMapper.toDomain(entity);
     }

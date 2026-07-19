@@ -1,9 +1,12 @@
 package com.elotech.gerenciadorTarefas.application.usuario;
 
+import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class UsuarioApplicationService {
 
     private final UsuarioRepository usuarioRepository;
@@ -18,12 +21,12 @@ public class UsuarioApplicationService {
         return usuarioRepository.salvar(usuario);
     }
 
-    public Usuario atualizar(UUID usuarioId, String nome, String email) {
+    public Usuario buscarPorId(final UUID pIdUsuario) {
 
-        Usuario usuario = usuarioRepository.buscarPorId(usuarioId);
-        usuario.alterarDados(nome, email);
-
-        return usuarioRepository.salvar(usuario);
+        if (pIdUsuario == null) {
+            throw new RegraNegocioException("Id do usuário é obrigatório.");
+        }
+        return usuarioRepository.buscarPorId(pIdUsuario);
     }
 
     public void remover(UUID usuarioId) {

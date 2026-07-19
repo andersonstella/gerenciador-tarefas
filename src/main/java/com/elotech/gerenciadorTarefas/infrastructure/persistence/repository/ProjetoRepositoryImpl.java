@@ -7,13 +7,14 @@ import com.elotech.gerenciadorTarefas.infrastructure.exception.RegistroNaoEncont
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.entity.ProjetoEntity;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.jpa.ProjetoJpaRepository;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.mapper.ProjetoMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public class ProjetoRepositoryImpl implements ProjetoRepository {
 
     private final ProjetoJpaRepository projetoJpaRepository;
-
 
     public ProjetoRepositoryImpl(final ProjetoJpaRepository projetoJpaRepository) {
         this.projetoJpaRepository = projetoJpaRepository;
@@ -31,7 +32,8 @@ public class ProjetoRepositoryImpl implements ProjetoRepository {
     @Override
     public Projeto buscarPorId(final UUID id) {
 
-        final ProjetoEntity entity = projetoJpaRepository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Projeto não encontrado"));
+        final ProjetoEntity entity = projetoJpaRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Projeto não encontrado"));
 
         return ProjetoMapper.toDomain(entity);
     }
