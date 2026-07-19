@@ -20,7 +20,7 @@ class ProjetoTest {
         Tarefa tarefa = new Tarefa("Criar API", "Implementar endpoint", PrioridadeTarefa.CRITICAL);
         tarefa.setResponsavel(usuario);
 
-        MembrosProjeto membrosProjeto = new MembrosProjeto();
+        MembroProjeto membrosProjeto = new MembroProjeto();
         membrosProjeto.setUsuario(usuario);
         membrosProjeto.setPapel(PapelMembro.ADMIN);
         
@@ -43,7 +43,7 @@ class ProjetoTest {
 
         tarefa.setResponsavel(usuario);
 
-        MembrosProjeto membrosProjeto = new MembrosProjeto();
+        MembroProjeto membrosProjeto = new MembroProjeto();
         membrosProjeto.setUsuario(usuario);
         membrosProjeto.setPapel(PapelMembro.MEMBER);
 

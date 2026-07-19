@@ -4,17 +4,20 @@ import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
-public class MembrosProjeto {
+public class MembroProjeto {
 
+    private UUID id;
     private Usuario usuario;
     private PapelMembro papel;
 
     /**
      * Contrutor
      */
-    public MembrosProjeto() {
+    public MembroProjeto() {
         //NA
     }
 
@@ -23,7 +26,7 @@ public class MembrosProjeto {
      * @param usuario
      * @param papel
      */
-    public MembrosProjeto(final Usuario usuario, final PapelMembro papel) {
+    public MembroProjeto(final Usuario usuario, final PapelMembro papel) {
         this.usuario = usuario;
         this.papel = papel;
     }

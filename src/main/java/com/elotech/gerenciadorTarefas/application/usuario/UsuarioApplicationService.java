@@ -31,7 +31,7 @@ public class UsuarioApplicationService {
         if(usuarioId == null){
             throw new IllegalArgumentException("Usuário obrigatório");
         }
-        usuarioRepository.deletar(usuarioId);
+        usuarioRepository.remover(usuarioId);
     }
 
 }

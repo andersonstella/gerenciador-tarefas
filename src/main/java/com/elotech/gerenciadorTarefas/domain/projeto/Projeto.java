@@ -20,7 +20,7 @@ public class Projeto {
 
     private UUID id;
     private String nome;
-    private final List<MembrosProjeto> membros = new ArrayList<>();
+    private final List<MembroProjeto> membros = new ArrayList<>();
     private final List<Tarefa> tarefas = new ArrayList<>();
     /**
      * Contrutor
@@ -30,7 +30,8 @@ public class Projeto {
     }
 
     /**
-     * Contrutor
+     * Contrutor de criação
+     * @param nome
      */
     public Projeto(final String nome) {
 
@@ -43,6 +44,16 @@ public class Projeto {
     }
 
     /**
+     * Construtor para reconstrção
+     * @param id
+     * @param nome
+     */
+    public Projeto(final UUID id, final String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    /**
      * Metodo responsavel por controlar a finalizacao de uma tarefa
      *
      * @param tarefaId
@@ -51,7 +62,7 @@ public class Projeto {
     public void finalizarTarefa(final UUID tarefaId, final Usuario usuario) {
 
         final Tarefa tarefa = buscarTarefa(tarefaId);
-        final MembrosProjeto membro = buscarMembro(usuario);
+        final MembroProjeto membro = buscarMembro(usuario);
 
         if (tarefa.isCritical() && !membro.isAdmin()) {
             throw new RegraNegocioException("Somente ADMIN pode finalizar tarefas CRITICAL");
@@ -108,7 +119,7 @@ public class Projeto {
             throw new RegraNegocioException("Usuário já é membro do projeto.");
         }
 
-        final MembrosProjeto membro = new MembrosProjeto(usuario, papel);
+        final MembroProjeto membro = new MembroProjeto(usuario, papel);
         membros.add(membro);
     }
 
@@ -121,13 +132,21 @@ public class Projeto {
         }
     }
 
+    public void carregarMembro(final MembroProjeto membro) {
+
+        if (membro == null) {
+            throw new RegraNegocioException("Membro não pode ser nulo.");
+        }
+        membros.add(membro);
+    }
+
     /**
      * Metodo que busca os membros do projeto
      *
      * @param pUsuario
      * @return
      */
-    private MembrosProjeto buscarMembro(final Usuario pUsuario) {
+    private MembroProjeto buscarMembro(final Usuario pUsuario) {
 
         return membros.stream()
             .filter(m -> m.getUsuario().equals(pUsuario))
