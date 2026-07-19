@@ -19,6 +19,16 @@ public class MembrosProjeto {
     }
 
     /**
+     * Contrutor
+     * @param usuario
+     * @param papel
+     */
+    public MembrosProjeto(final Usuario usuario, final PapelMembro papel) {
+        this.usuario = usuario;
+        this.papel = papel;
+    }
+
+    /**
      * Boolena para saber se e admin
      * @return
      */

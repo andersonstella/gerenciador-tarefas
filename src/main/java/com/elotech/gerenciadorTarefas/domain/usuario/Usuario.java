@@ -1,12 +1,11 @@
 package com.elotech.gerenciadorTarefas.domain.usuario;
 
+import ch.qos.logback.core.util.StringUtil;
 import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
 
-@Setter
 @Getter
 public class Usuario {
 
@@ -33,23 +32,38 @@ public class Usuario {
     }
 
     /**
+     * Controla a alteracao de dados do usuario
      *
-     * @param pNome
+     * @param nome
+     * @param email
      */
-    private void validarNome(final String pNome) {
+    public void alterarDados(String nome, String email) {
 
-        if (pNome == null || pNome.isBlank()) {
+        validarNome(nome);
+        validarEmail(email);
+
+        this.nome = nome;
+        this.email = email;
+    }
+
+    /**
+     *
+     * @param nome
+     */
+    private void validarNome(final String nome) {
+
+        if (StringUtil.isNullOrEmpty(nome)) {
             throw new RegraNegocioException("Nome do usuário é obrigatório");
         }
     }
 
     /**
      *
-     * @param pEmail
+     * @param email
      */
-    private void validarEmail(final String pEmail) {
+    private void validarEmail(final String email) {
 
-        if (pEmail == null || pEmail.isBlank()) {
+        if (StringUtil.isNullOrEmpty(email)) {
             throw new RegraNegocioException("Email do usuário é obrigatório");
         }
     }

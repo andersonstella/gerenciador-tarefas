@@ -28,7 +28,7 @@ class ProjetoTest {
         projeto.getMembros().add(membrosProjeto);
         projeto.getTarefas().add(tarefa);
 
-        projeto.finalizarTarefa(tarefa, usuario);
+        projeto.finalizarTarefa(tarefa.getId(), usuario);
 
         assertEquals(StatusTarefa.DONE, tarefa.getStatus());
 
@@ -51,6 +51,6 @@ class ProjetoTest {
         projeto.getMembros().add(membrosProjeto);
         projeto.getTarefas().add(tarefa);
 
-        assertThrows(RegraNegocioException.class, () -> projeto.finalizarTarefa(tarefa, usuario));
+        assertThrows(RegraNegocioException.class, () -> projeto.finalizarTarefa(tarefa.getId(), usuario));
     }
 }

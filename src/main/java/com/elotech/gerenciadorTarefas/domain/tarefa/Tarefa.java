@@ -40,6 +40,7 @@ public class Tarefa {
      */
     public Tarefa(final String pTitulo, final String pDescricao, final PrioridadeTarefa pPrioridade) {
 
+        this.id = UUID.randomUUID();
         this.titulo = pTitulo;
         this.descricao = pDescricao;
         this.prioridade = pPrioridade;
@@ -83,6 +84,22 @@ public class Tarefa {
      */
     public boolean isCritical() {
         return prioridade == PrioridadeTarefa.CRITICAL;
+    }
+
+    public void atribuirResponsavel(final Usuario usuario) {
+
+        if (usuario == null) {
+            throw new RegraNegocioException("Responsável é obrigatório.");
+        }
+        this.responsavel = usuario;
+    }
+
+    public void alterarPrioridade(final PrioridadeTarefa prioridade) {
+
+        if (prioridade == null) {
+            throw new RegraNegocioException("A prioridade é obrigatória.");
+        }
+        this.prioridade = prioridade;
     }
 
     /**
