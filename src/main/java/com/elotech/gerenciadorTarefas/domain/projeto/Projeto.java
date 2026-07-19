@@ -6,6 +6,7 @@ import com.elotech.gerenciadorTarefas.domain.tarefa.PrioridadeTarefa;
 import com.elotech.gerenciadorTarefas.domain.tarefa.StatusTarefa;
 import com.elotech.gerenciadorTarefas.domain.tarefa.Tarefa;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
+import com.elotech.gerenciadorTarefas.infrastructure.exception.RegistroNaoEncontradoException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -128,16 +129,23 @@ public class Projeto {
         boolean removido = membros.removeIf(membro -> membro.getUsuario().getId().equals(usuarioId));
 
         if (!removido) {
-            throw new RegraNegocioException("Membro não encontrado.");
+            throw new RegistroNaoEncontradoException("Membro não encontrado.");
+        }
+    }
+
+    public void carregarTarefa(final Tarefa tarefa) {
+
+        if (Objects.nonNull(tarefa)) {
+            tarefas.add(tarefa);
         }
     }
 
     public void carregarMembro(final MembroProjeto membro) {
 
-        if (membro == null) {
-            throw new RegraNegocioException("Membro não pode ser nulo.");
+        if (Objects.nonNull(membro)) {
+            membros.add(membro);
         }
-        membros.add(membro);
+
     }
 
     /**

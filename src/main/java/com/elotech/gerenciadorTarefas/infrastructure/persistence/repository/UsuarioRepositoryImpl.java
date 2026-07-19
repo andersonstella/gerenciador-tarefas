@@ -3,6 +3,7 @@ package com.elotech.gerenciadorTarefas.infrastructure.persistence.repository;
 import com.elotech.gerenciadorTarefas.application.usuario.UsuarioRepository;
 import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
+import com.elotech.gerenciadorTarefas.infrastructure.exception.RegistroNaoEncontradoException;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.entity.UsuarioEntity;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.jpa.UsuarioJpaRepository;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.mapper.UsuarioMapper;
@@ -29,7 +30,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     @Override
     public Usuario buscarPorId(final UUID id) {
 
-        final UsuarioEntity entity = usuarioJpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        final UsuarioEntity entity = usuarioJpaRepository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado"));
 
         return UsuarioMapper.toDomain(entity);
     }
@@ -38,7 +39,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     public void remover(final UUID id) {
 
         if (!usuarioJpaRepository.existsById(id)) {
-            throw new RegraNegocioException("Usuário não encontrado");
+            throw new RegistroNaoEncontradoException("Usuário não encontrado");
         }
         usuarioJpaRepository.deleteById(id);
     }

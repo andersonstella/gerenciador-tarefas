@@ -3,6 +3,7 @@ package com.elotech.gerenciadorTarefas.infrastructure.persistence.repository;
 import com.elotech.gerenciadorTarefas.application.projeto.ProjetoRepository;
 import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.projeto.Projeto;
+import com.elotech.gerenciadorTarefas.infrastructure.exception.RegistroNaoEncontradoException;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.entity.ProjetoEntity;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.jpa.ProjetoJpaRepository;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.mapper.ProjetoMapper;
@@ -30,7 +31,7 @@ public class ProjetoRepositoryImpl implements ProjetoRepository {
     @Override
     public Projeto buscarPorId(final UUID id) {
 
-        final ProjetoEntity entity = projetoJpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Projeto não encontrado"));
+        final ProjetoEntity entity = projetoJpaRepository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Projeto não encontrado"));
 
         return ProjetoMapper.toDomain(entity);
     }
@@ -39,7 +40,7 @@ public class ProjetoRepositoryImpl implements ProjetoRepository {
     public void remover(final UUID id) {
 
         if (!projetoJpaRepository.existsById(id)) {
-            throw new RegraNegocioException("Usuário não encontrado");
+            throw new RegistroNaoEncontradoException("Usuário não encontrado");
         }
         projetoJpaRepository.deleteById(id);
     }

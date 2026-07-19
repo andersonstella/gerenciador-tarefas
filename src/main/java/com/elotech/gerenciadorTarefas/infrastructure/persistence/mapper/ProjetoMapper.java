@@ -11,11 +11,8 @@ public final class ProjetoMapper {
     public static ProjetoEntity toEntity(final Projeto projeto) {
 
         ProjetoEntity entity = new ProjetoEntity(projeto.getId(), projeto.getNome());
-        entity.setId(projeto.getId());
-        entity.setNome(projeto.getNome());
 
         projeto.getTarefas().forEach(tarefa -> entity.adicionarTarefa(TarefaMapper.toEntity(tarefa)));
-
         projeto.getMembros().forEach(membro -> entity.adicionarMembro(MembroProjetoMapper.toEntity(membro)));
 
         return entity;
@@ -29,7 +26,7 @@ public final class ProjetoMapper {
 
         Projeto projeto = new Projeto(entity.getId(), entity.getNome());
 
-        entity.getTarefas().forEach(tarefaEntity -> projeto.adicionarTarefa(TarefaMapper.toDomain(tarefaEntity)));
+        entity.getTarefas().forEach(tarefaEntity -> projeto.carregarTarefa(TarefaMapper.toDomain(tarefaEntity)));
         entity.getMembros().forEach(membroEntity -> projeto.carregarMembro(MembroProjetoMapper.toDomain(membroEntity)));
 
         return projeto;
