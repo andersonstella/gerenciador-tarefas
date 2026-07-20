@@ -4,6 +4,8 @@ import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,5 +38,11 @@ public class UsuarioApplicationService {
         }
         usuarioRepository.remover(usuarioId);
     }
+
+    public List<Usuario> listar() {
+
+        return usuarioRepository.buscarTodos();
+    }
+
 
 }

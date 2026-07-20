@@ -8,6 +8,10 @@ import com.elotech.gerenciadorTarefas.api.dto.tarefa.FinalizarTarefaRequestDTO;
 import com.elotech.gerenciadorTarefas.api.mapper.ProjetoApiMapper;
 import com.elotech.gerenciadorTarefas.application.tarefa.TarefaApplicationService;
 import com.elotech.gerenciadorTarefas.domain.projeto.Projeto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+@Tag(name = "Tarefas", description = "Gerenciamento de tarefas.")
 @RestController
 @RequestMapping("/projetos/{projetoId}/tarefas")
 public class TarefaController {
@@ -30,6 +35,11 @@ public class TarefaController {
         this.tarefaApplicationService = tarefaApplicationService;
     }
 
+    @Operation(summary = "Criar tarefa")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PostMapping
     public ResponseEntity<ProjetoResponseDTO> criar(@PathVariable final UUID projetoId,
             @Valid @RequestBody final CriarTarefaRequestDTO request) {
@@ -40,6 +50,11 @@ public class TarefaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ProjetoApiMapper.toResponse(projeto));
     }
 
+    @Operation(summary = "Iniciar tarefa")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Tarefa iniciada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PutMapping("/{tarefaId}/iniciar")
     public ResponseEntity<ProjetoResponseDTO> iniciar(@PathVariable final UUID projetoId,
             @PathVariable final UUID tarefaId) {
@@ -49,6 +64,11 @@ public class TarefaController {
         return ResponseEntity.ok(ProjetoApiMapper.toResponse(projeto));
     }
 
+    @Operation(summary = "Finalizar tarefa")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Tarefa finalizada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PutMapping("/{tarefaId}/finalizar")
     public ResponseEntity<ProjetoResponseDTO> finalizar(@PathVariable final UUID projetoId,
             @PathVariable final UUID tarefaId, @Valid @RequestBody final FinalizarTarefaRequestDTO request) {
@@ -58,6 +78,11 @@ public class TarefaController {
         return ResponseEntity.ok(ProjetoApiMapper.toResponse(projeto));
     }
 
+    @Operation(summary = "Atribuir responsável na tarefa")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Responsável atribuido com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PutMapping("/{tarefaId}/responsavel")
     public ResponseEntity<ProjetoResponseDTO> atribuirResponsavel(@PathVariable final UUID projetoId,
             @PathVariable final UUID tarefaId, @Valid @RequestBody final AtribuirResponsavelRequestDTO request) {
@@ -67,9 +92,14 @@ public class TarefaController {
         return ResponseEntity.ok(ProjetoApiMapper.toResponse(projeto));
     }
 
+    @Operation(summary = "Alterar prioridade da tarefa")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Prioridade alterada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PutMapping("/{tarefaId}/prioridade")
     public ResponseEntity<ProjetoResponseDTO> alterarPrioridade(@PathVariable final UUID projetoId,
-            @PathVariable final UUID tarefaId, @RequestBody final AlterarPrioridadeRequestDTO request) {
+            @PathVariable final UUID tarefaId, @Valid @RequestBody final AlterarPrioridadeRequestDTO request) {
 
         final Projeto projeto = tarefaApplicationService.alterarPrioridade(projetoId, tarefaId, request.prioridade());
 

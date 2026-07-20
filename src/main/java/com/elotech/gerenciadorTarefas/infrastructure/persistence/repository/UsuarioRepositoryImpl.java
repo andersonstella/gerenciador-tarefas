@@ -1,7 +1,6 @@
 package com.elotech.gerenciadorTarefas.infrastructure.persistence.repository;
 
 import com.elotech.gerenciadorTarefas.application.usuario.UsuarioRepository;
-import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import com.elotech.gerenciadorTarefas.infrastructure.exception.RegistroNaoEncontradoException;
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.entity.UsuarioEntity;
@@ -9,6 +8,8 @@ import com.elotech.gerenciadorTarefas.infrastructure.persistence.jpa.UsuarioJpaR
 import com.elotech.gerenciadorTarefas.infrastructure.persistence.mapper.UsuarioMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -45,6 +46,28 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             throw new RegistroNaoEncontradoException("Usuário não encontrado");
         }
         usuarioJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Usuario> buscarTodos() {
+
+        final List<UsuarioEntity> usuariosEntity = usuarioJpaRepository.findAll();
+        final List<Usuario> usuarios = new ArrayList<>();
+
+        for (UsuarioEntity entity : usuariosEntity) {
+            usuarios.add(toDomain(entity));
+        }
+
+        return usuarios;
+    }
+
+    private Usuario toDomain(final UsuarioEntity entity) {
+
+        return new Usuario(
+                entity.getId(),
+                entity.getNome(),
+                entity.getEmail()
+        );
     }
 
 }
