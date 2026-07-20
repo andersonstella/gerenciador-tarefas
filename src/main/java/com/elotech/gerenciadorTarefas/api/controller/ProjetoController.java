@@ -3,6 +3,7 @@ package com.elotech.gerenciadorTarefas.api.controller;
 import com.elotech.gerenciadorTarefas.api.dto.projeto.AdicionarMembroRequestDTO;
 import com.elotech.gerenciadorTarefas.api.dto.projeto.CriarProjetoRequestDTO;
 import com.elotech.gerenciadorTarefas.api.dto.projeto.ProjetoResponseDTO;
+import com.elotech.gerenciadorTarefas.api.dto.projeto.RelatorioProjetoResponseDTO;
 import com.elotech.gerenciadorTarefas.api.mapper.ProjetoApiMapper;
 import com.elotech.gerenciadorTarefas.application.projeto.ProjetoApplicationService;
 import com.elotech.gerenciadorTarefas.domain.projeto.Projeto;
@@ -84,5 +85,15 @@ public class ProjetoController {
         projetoApplicationService.removerMembro(projetoId, usuarioId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Gera relatório resumido do projeto")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Relatório gerado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Projeto não encontrado"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida") })
+    @GetMapping("/{projetoId}/relatorio")
+    public ResponseEntity<RelatorioProjetoResponseDTO> gerarRelatorio(@PathVariable final UUID projetoId) {
+
+        return ResponseEntity.ok(projetoApplicationService.gerarRelatorio(projetoId));
     }
 }
