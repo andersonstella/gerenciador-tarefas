@@ -1,12 +1,17 @@
 package com.elotech.gerenciadorTarefas.application.projeto;
 
+import com.elotech.gerenciadorTarefas.api.dto.projeto.RelatorioProjetoResponseDTO;
 import com.elotech.gerenciadorTarefas.application.usuario.UsuarioRepository;
 import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.projeto.PapelMembro;
 import com.elotech.gerenciadorTarefas.domain.projeto.Projeto;
+import com.elotech.gerenciadorTarefas.domain.tarefa.PrioridadeTarefa;
+import com.elotech.gerenciadorTarefas.domain.tarefa.StatusTarefa;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -76,6 +81,16 @@ public class ProjetoApplicationService {
         return projetoRepository.buscarPorId(projetoId);
     }
 
+    public RelatorioProjetoResponseDTO gerarRelatorio(final UUID projetoId) {
+
+        final Projeto projeto = buscarPorId(projetoId);
+
+        final Map<String, Long> byStatus = contarPorStatus(projeto);
+        final Map<String, Long> byPriority = contarPorPrioridade(projeto);
+
+        return new RelatorioProjetoResponseDTO(byStatus, byPriority);
+    }
+
     private Usuario buscarUsuarioPorId(final UUID usuarioId) {
 
         if (usuarioId == null) {
@@ -83,6 +98,40 @@ public class ProjetoApplicationService {
         }
 
         return usuarioRepository.buscarPorId(usuarioId);
+    }
+
+    private Map<String, Long> contarPorStatus(final Projeto projeto) {
+
+        final Map<String, Long> status = new LinkedHashMap<>();
+
+        for (StatusTarefa value : StatusTarefa.values()) {
+            status.put(value.name(), 0L);
+        }
+
+        projeto.getTarefas().forEach(tarefa ->
+                status.merge(
+                        tarefa.getStatus().name(),
+                        1L,
+                        Long::sum));
+
+        return status;
+    }
+
+    private Map<String, Long> contarPorPrioridade(final Projeto projeto) {
+
+        final Map<String, Long> prioridade = new LinkedHashMap<>();
+
+        for (PrioridadeTarefa value : PrioridadeTarefa.values()) {
+            prioridade.put(value.name(), 0L);
+        }
+
+        projeto.getTarefas().forEach(tarefa ->
+                prioridade.merge(
+                        tarefa.getPrioridade().name(),
+                        1L,
+                        Long::sum));
+
+        return prioridade;
     }
 
 }
