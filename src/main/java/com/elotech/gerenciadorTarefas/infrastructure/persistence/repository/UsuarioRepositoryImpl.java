@@ -61,6 +61,15 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return usuarios;
     }
 
+    @Override
+    public Usuario buscarPorEmail(final String email) {
+
+        UsuarioEntity entity = usuarioJpaRepository.findByEmail(email)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado"));
+
+        return UsuarioMapper.toDomain(entity);
+    }
+
     private Usuario toDomain(final UsuarioEntity entity) {
 
         return new Usuario(

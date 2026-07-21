@@ -86,7 +86,20 @@ public class Tarefa {
      * Metodo que inicia uma tarefa
      */
     public void iniciarTarefa() {
-        alterarStatus(StatusTarefa.IN_PROGRESS);
+
+        if (responsavel == null) {
+            throw new RegraNegocioException(
+                    "A tarefa precisa ter um responsável antes de ser iniciada."
+            );
+        }
+
+        if (status != StatusTarefa.TODO) {
+            throw new RegraNegocioException(
+                    "Apenas tarefas TODO podem ser iniciadas."
+            );
+        }
+
+        status = StatusTarefa.IN_PROGRESS;
     }
 
     /**
