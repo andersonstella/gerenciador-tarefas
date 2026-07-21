@@ -37,7 +37,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> criar(@Valid @RequestBody final UsuarioRequestDTO request) {
 
-        final Usuario usuario = usuarioApplicationService.criar(request.nome(), request.email());
+        final Usuario usuario = usuarioApplicationService.criar(request.nome(), request.email(), request.senha());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
