@@ -247,6 +247,13 @@ Durante o desenvolvimento foram adotadas algumas práticas para manter o domíni
 - Regras de negócio concentradas no domínio.
 - Autenticação baseada em JWT utilizando Spring Security.
 
+# Evolução
+- Refresh token
+- Teste de integração
+- Listagem com filtro e ordenação
+- Busca textual
+---
+
 # Testes
 
 A API está documentada utilizando **Swagger/OpenAPI**, permitindo que todos os endpoints sejam testados diretamente pelo navegador.
