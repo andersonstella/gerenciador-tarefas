@@ -10,25 +10,27 @@ import java.util.UUID;
 public class Usuario {
 
     private UUID id;
-
     private String nome;
-
     private String email;
+    private String senha;
 
     /**
      * Contrutor para criação
      *
-     * @param pNome
-     * @param pEmail
+     * @param nome
+     * @param email
+     * @param senha
      */
-    public Usuario(final String pNome, final String pEmail) {
+    public Usuario(final String nome, final String email, final String senha) {
 
-        validarNome(pNome);
-        validarEmail(pEmail);
+        validarNome(nome);
+        validarEmail(email);
+        validarSenha(senha);
 
         this.id = UUID.randomUUID();
-        this.nome = pNome;
-        this.email = pEmail;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
     }
 
     /**
@@ -37,10 +39,11 @@ public class Usuario {
      * @param nome
      * @param email
      */
-    public Usuario(final UUID id, final String nome, final String email) {
+    public Usuario(final UUID id, final String nome, final String email, final String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.senha = senha;
     }
 
     /**
@@ -77,6 +80,13 @@ public class Usuario {
 
         if (StringUtil.isNullOrEmpty(email)) {
             throw new RegraNegocioException("Email do usuário é obrigatório");
+        }
+    }
+
+    private void validarSenha(final String senha) {
+
+        if (StringUtil.isNullOrEmpty(senha)) {
+            throw new RegraNegocioException("Senha do usuário é obrigatória");
         }
     }
 

@@ -66,7 +66,8 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return new Usuario(
                 entity.getId(),
                 entity.getNome(),
-                entity.getEmail()
+                entity.getEmail(),
+                entity.getSenha()
         );
     }
 

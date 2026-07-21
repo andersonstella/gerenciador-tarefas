@@ -20,6 +20,7 @@ public final class UsuarioMapper {
         entity.setId(usuario.getId());
         entity.setNome(usuario.getNome());
         entity.setEmail(usuario.getEmail());
+        entity.setSenha(usuario.getSenha());
 
         return entity;
     }
@@ -29,6 +30,6 @@ public final class UsuarioMapper {
         if (entity == null) {
             return null;
         }
-        return new Usuario(entity.getId(), entity.getNome(), entity.getEmail());
+        return new Usuario(entity.getId(), entity.getNome(), entity.getEmail(), entity.getSenha());
     }
 }
