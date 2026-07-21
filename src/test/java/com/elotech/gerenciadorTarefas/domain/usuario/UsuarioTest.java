@@ -10,7 +10,7 @@ class UsuarioTest {
     @Test
     void deveCriarUsuarioValido() {
 
-        Usuario usuario = new Usuario("Silva", "silva@gmail.com");
+        Usuario usuario = new Usuario("Silva", "silva@gmail.com", "12345");
 
         assertNotNull(usuario);
         assertEquals("Silva", usuario.getNome());

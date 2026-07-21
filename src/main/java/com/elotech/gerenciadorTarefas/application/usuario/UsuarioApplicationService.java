@@ -17,9 +17,9 @@ public class UsuarioApplicationService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario criar(final String nome, final String email) {
+    public Usuario criar(final String nome, final String email, final String senha) {
 
-        Usuario usuario = new Usuario(nome, email);
+        Usuario usuario = new Usuario(nome, email, senha);
         return usuarioRepository.salvar(usuario);
     }
 

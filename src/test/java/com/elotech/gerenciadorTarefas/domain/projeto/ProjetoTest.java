@@ -15,7 +15,7 @@ class ProjetoTest {
     @Test
     void devePermitirAdminFinalizarCritical() {
 
-        Usuario usuario = new Usuario("Silva", "silva@gmail.com");
+        Usuario usuario = new Usuario("Silva", "silva@gmail.com", "12345");
 
         Tarefa tarefa = new Tarefa("Criar API", "Implementar endpoint", PrioridadeTarefa.CRITICAL);
         tarefa.setResponsavel(usuario);
@@ -37,7 +37,7 @@ class ProjetoTest {
     @Test
     void naoDevePermitirMemberFinalizarCritical() {
 
-        Usuario usuario = new Usuario("Silva", "silva@gmail.com");
+        Usuario usuario = new Usuario("Silva", "silva@gmail.com", "12345");
 
         Tarefa tarefa = new Tarefa("Criar API", "Implementar endpoint", PrioridadeTarefa.CRITICAL);
 
