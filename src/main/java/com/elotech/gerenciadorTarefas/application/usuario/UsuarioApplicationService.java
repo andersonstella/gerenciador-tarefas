@@ -2,9 +2,9 @@ package com.elotech.gerenciadorTarefas.application.usuario;
 
 import com.elotech.gerenciadorTarefas.domain.exception.RegraNegocioException;
 import com.elotech.gerenciadorTarefas.domain.usuario.Usuario;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,14 +12,18 @@ import java.util.UUID;
 public class UsuarioApplicationService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioApplicationService(UsuarioRepository usuarioRepository) {
+    public UsuarioApplicationService(final UsuarioRepository usuarioRepository, final PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Usuario criar(final String nome, final String email, final String senha) {
 
-        Usuario usuario = new Usuario(nome, email, senha);
+        final String senhaCriptografada = passwordEncoder.encode(senha);
+
+        Usuario usuario = new Usuario(nome, email, senhaCriptografada);
         return usuarioRepository.salvar(usuario);
     }
 

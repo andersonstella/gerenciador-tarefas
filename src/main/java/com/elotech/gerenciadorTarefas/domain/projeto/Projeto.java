@@ -149,18 +149,21 @@ public class Projeto {
     }
 
     /**
-     * Metodo que busca os membros do projeto
+     * Busca um membro do projeto.
      *
-     * @param pUsuario
-     * @return
+     * @param usuario
+     *         Usuário a ser localizado.
+     * @return Membro do projeto.
      */
-    private MembroProjeto buscarMembro(final Usuario pUsuario) {
+    private MembroProjeto buscarMembro(final Usuario usuario) {
 
-        return membros.stream()
-            .filter(m -> m.getUsuario().equals(pUsuario))
-            .findFirst()
-            .orElseThrow(() -> new RegraNegocioException("Usuário não pertence ao projeto")
-            );
+        for (MembroProjeto membro : membros) {
+
+            if (membro.getUsuario() != null && membro.getUsuario().getId().equals(usuario.getId())) {
+                return membro;
+            }
+        }
+        throw new RegraNegocioException("Usuário não pertence ao projeto");
     }
 
     /**
